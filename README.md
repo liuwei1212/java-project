@@ -14,7 +14,7 @@
 4. 评论与互动模块
    - 公告/活动评论、点赞
 5. 系统管理模块
-   - 数据备份、日志管理、权限分配
+   - 数据备份、日志管理、用户管理模块
 
 ### 主要页面
 - 登录/注册页
@@ -83,6 +83,14 @@
 | event_id    | BIGINT      | 活动ID      |
 | user_id     | BIGINT      | 用户ID      |
 | register_time| DATETIME   | 报名时间    |
+
+#### 评论点赞表 comment_like
+| 字段名      | 类型         | 说明         |
+| ----------- | ------------| ------------|
+| id          | BIGINT      | 主键        |
+| comment_id  | BIGINT      | 评论ID      |
+| user_id     | BIGINT      | 用户ID      |
+| create_time | DATETIME    | 点赞时间    |
 
 ## 三、开发流程
 1. 需求分析：确定功能模块和主要页面

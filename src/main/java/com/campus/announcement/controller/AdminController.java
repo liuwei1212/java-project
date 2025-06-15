@@ -25,9 +25,6 @@ public class AdminController {
     @Autowired
     private com.campus.announcement.service.UserService userService;
 
-    @Autowired
-    private com.campus.announcement.service.UserPermissionService userPermissionService;
-
     private boolean isAdminOrTeacher(javax.servlet.http.HttpSession session) {
         Object userObj = session.getAttribute("user");
         if (userObj instanceof com.campus.announcement.model.User) {
@@ -88,53 +85,6 @@ public class AdminController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=application.log")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(new InputStreamResource(is));
-    }
-
-    @GetMapping("/permissions")
-    public String permissions(javax.servlet.http.HttpSession session, org.springframework.ui.Model model) {
-        if (!isAdminOrTeacher(session)) return "redirect:/error";
-        java.util.List<com.campus.announcement.model.User> users = userService.findAll();
-        for (com.campus.announcement.model.User u : users) {
-            u.setPermissions(userPermissionService.getPermissions(u.getId()));
-        }
-        model.addAttribute("users", users);
-        return "admin/permissions";
-    }
-
-    @PostMapping("/permissions/update")
-    public String updatePermission(@RequestParam Long userId,
-                                   @RequestParam String role,
-                                   @RequestParam(required = false) String[] permissions,
-                                   javax.servlet.http.HttpSession session,
-                                   org.springframework.ui.Model model) {
-        if (!isAdminOrTeacher(session)) return "redirect:/error";
-        com.campus.announcement.model.User user = userService.findById(userId);
-        if (user != null) {
-            user.setRole(role);
-            userService.updateUser(user);
-            // 先删除所有旧权限
-            java.util.List<String> oldPerms = userPermissionService.getPermissions(userId);
-            if (oldPerms != null) {
-                for (String p : oldPerms) {
-                    userPermissionService.revokePermission(userId, p);
-                }
-            }
-            // 新增新权限
-            if (permissions != null) {
-                for (String p : permissions) {
-                    userPermissionService.grantPermission(userId, p);
-                }
-            }
-            model.addAttribute("msg", "角色和权限修改成功");
-        } else {
-            model.addAttribute("msg", "用户不存在");
-        }
-        java.util.List<com.campus.announcement.model.User> users = userService.findAll();
-        for (com.campus.announcement.model.User u : users) {
-            u.setPermissions(userPermissionService.getPermissions(u.getId()));
-        }
-        model.addAttribute("users", users);
-        return "admin/permissions";
     }
 
     @GetMapping("/registrations")

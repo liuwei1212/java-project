@@ -1,7 +1,6 @@
 package com.campus.announcement.controller;
 import com.campus.announcement.model.User;
 import com.campus.announcement.service.UserService;
-import com.campus.announcement.service.UserPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +13,6 @@ import java.util.List;
 public class UserManageController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserPermissionService userPermissionService;
 
     private boolean isAdmin(HttpSession session) {
         Object userObj = session.getAttribute("user");
@@ -26,9 +23,6 @@ public class UserManageController {
     public String list(HttpSession session, Model model) {
         if (!isAdmin(session)) return "redirect:/error";
         List<User> users = userService.findAll();
-        for (User u : users) {
-            u.setPermissions(userPermissionService.getPermissions(u.getId()));
-        }
         model.addAttribute("users", users);
         return "admin/user_manage";
     }
@@ -50,7 +44,6 @@ public class UserManageController {
     public String editPage(@PathVariable Long id, HttpSession session, Model model) {
         if (!isAdmin(session)) return "redirect:/error";
         User user = userService.findById(id);
-        user.setPermissions(userPermissionService.getPermissions(id));
         model.addAttribute("user", user);
         return "admin/user_edit";
     }
@@ -60,13 +53,6 @@ public class UserManageController {
         if (!isAdmin(session)) return "redirect:/error";
         userService.updateUser(user);
         // 更新权限
-        List<String> oldPerms = userPermissionService.getPermissions(user.getId());
-        if (oldPerms != null) {
-            for (String p : oldPerms) userPermissionService.revokePermission(user.getId(), p);
-        }
-        if (permissions != null) {
-            for (String p : permissions) userPermissionService.grantPermission(user.getId(), p);
-        }
         return "redirect:/admin/user/list";
     }
 
