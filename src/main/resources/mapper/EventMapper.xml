@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.announcement.mapper.EventMapper">
+    <select id="findById" resultType="com.campus.announcement.model.Event">
+        SELECT * FROM event WHERE id = #{id}
+    </select>
+    <select id="findAll" resultType="com.campus.announcement.model.Event">
+        SELECT * FROM event ORDER BY start_time DESC
+    </select>
+    <insert id="insertEvent" parameterType="com.campus.announcement.model.Event">
+        INSERT INTO event(title, description, location, start_time, end_time, author_id, create_time)
+        VALUES(#{title}, #{description}, #{location}, #{startTime}, #{endTime}, #{authorId}, NOW())
+    </insert>
+    <update id="updateEvent" parameterType="com.campus.announcement.model.Event">
+        UPDATE event SET title=#{title}, description=#{description}, location=#{location}, start_time=#{startTime}, end_time=#{endTime} WHERE id=#{id}
+    </update>
+    <delete id="deleteEvent" parameterType="long">
+        DELETE FROM event WHERE id=#{id}
+    </delete>
+</mapper> 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>添加评论</title>
+</head>
+<body>
+<h2>添加评论</h2>
+<form th:action="@{/comment/add}" method="post">
+    <input type="hidden" name="targetType" th:value="${targetType}">
+    <input type="hidden" name="targetId" th:value="${targetId}">
+    用户ID：<input type="text" name="userId" required><br>
+    内容：<textarea name="content" required></textarea><br>
+    <button type="submit">提交评论</button>
+</form>
+</body>
+</html> 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>报名管理</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div th:if="${session.user == null or (session.user.role != 'admin' and session.user.role != 'teacher')}">
+    <h2>无权限访问</h2>
+    <p>仅管理员和教师可访问报名管理。</p>
+</div>
+<div class="container" th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+<h2>报名管理</h2>
+<table border="1">
+    <tr>
+        <th>报名ID</th>
+        <th>活动ID</th>
+        <th>用户ID</th>
+        <th>报名时间</th>
+    </tr>
+    <tr th:each="r : ${registrations}">
+        <td th:text="${r.id}"></td>
+        <td th:text="${r.eventId}"></td>
+        <td th:text="${r.userId}"></td>
+        <td th:text="${#dates.format(r.registerTime, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+</table>
+<!-- 系统管理相关入口已移除 -->
+</div>
+</body>
+</html> 

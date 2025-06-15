@@ -1,0 +1,97 @@
+body {
+    background: url('bg-university.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+nav, .navbar {
+    background: #1976d2;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+nav a, .navbar a {
+    color: #fff;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+nav a:hover, .navbar a:hover {
+    color: #ffd600;
+}
+.banner {
+    background: #1565c0;
+    color: #fff;
+    text-align: center;
+    padding: 24px 0 12px 0;
+    font-size: 2.2em;
+    letter-spacing: 2px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.logo {
+    height: 36px;
+    margin-right: 18px;
+    vertical-align: middle;
+}
+.container {
+    background: #fff;
+    margin: 30px auto;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    max-width: 600px;
+}
+input, select, textarea {
+    width: 90%;
+    padding: 8px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: #1976d2;
+    outline: none;
+}
+input::placeholder, textarea::placeholder {
+    color: #bdbdbd;
+}
+button {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+button:hover {
+    background: #1565c0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    background: #fafbfc;
+}
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 8px;
+    text-align: left;
+}
+th {
+    background: #e3f2fd;
+}
+tr:nth-child(even) {
+    background: #f5faff;
+}
+tr:hover {
+    background: #e3f2fd;
+} 

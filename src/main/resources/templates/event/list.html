@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>活动列表</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="banner">
+    <img src="https://img.icons8.com/color/48/000000/school-building.png" class="logo" alt="logo"/>
+    校园公告/活动发布系统
+</div>
+<div class="container">
+<h2>活动列表</h2>
+<span th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+    <a th:href="@{/event/add}">发布活动</a>
+    <a th:href="@{/admin/registrations}">报名管理</a>
+</span>
+<table border="1">
+    <tr>
+        <th>标题</th>
+        <th>地点</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>操作</th>
+    </tr>
+    <tr th:each="e : ${events}">
+        <td><a th:href="@{'/event/detail/' + ${e.id}}" th:text="${e.title}"></a></td>
+        <td th:text="${e.location}"></td>
+        <td th:text="${#dates.format(e.startTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#dates.format(e.endTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td>
+            <span th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+                <a th:href="@{'/event/edit/' + ${e.id}}">编辑</a>
+                <a th:href="@{'/event/delete/' + ${e.id}}">删除</a>
+            </span>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html> 

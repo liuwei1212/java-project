@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布活动</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="banner">
+    <img src="https://img.icons8.com/color/48/000000/school-building.png" class="logo" alt="logo"/>
+    校园公告/活动发布系统
+</div>
+<div class="container">
+<h2>发布活动</h2>
+<form th:action="@{/event/add}" method="post">
+    标题：<input type="text" name="title" placeholder="请输入活动标题" required><br>
+    描述：<textarea name="description" placeholder="请输入活动描述"></textarea><br>
+    地点：<input type="text" name="location" placeholder="请输入活动地点"><br>
+    开始时间：<input type="datetime-local" name="startTime" required><br>
+    结束时间：<input type="datetime-local" name="endTime" required><br>
+    <button type="submit">发布</button>
+</form>
+</div>
+</body>
+</html> 

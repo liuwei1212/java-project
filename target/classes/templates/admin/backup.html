@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>数据备份</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div th:if="${session.user == null or (session.user.role != 'admin' and session.user.role != 'teacher')}">
+    <h2>无权限访问</h2>
+    <p>仅管理员和教师可访问数据备份。</p>
+</div>
+<div class="container" th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+<h2>数据备份</h2>
+<p th:if="${msg != null}" th:text="${msg}"></p>
+<p>此处可扩展为数据库备份操作。当前仅为演示，未实现真实备份。</p>
+<form method="post" th:action="@{/admin/backup/export}">
+    <button type="submit">导出数据库</button>
+</form>
+</div>
+</body>
+</html> 

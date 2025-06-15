@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.announcement.mapper.AnnouncementMapper">
+    <select id="findById" resultType="com.campus.announcement.model.Announcement">
+        SELECT * FROM announcement WHERE id = #{id}
+    </select>
+    <select id="findAll" resultType="com.campus.announcement.model.Announcement">
+        SELECT * FROM announcement ORDER BY is_top DESC, create_time DESC
+    </select>
+    <insert id="insertAnnouncement" parameterType="com.campus.announcement.model.Announcement">
+        INSERT INTO announcement(title, content, author_id, is_top, create_time)
+        VALUES(#{title}, #{content}, #{authorId}, #{isTop}, NOW())
+    </insert>
+    <update id="updateAnnouncement" parameterType="com.campus.announcement.model.Announcement">
+        UPDATE announcement SET title=#{title}, content=#{content}, is_top=#{isTop} WHERE id=#{id}
+    </update>
+    <delete id="deleteAnnouncement" parameterType="long">
+        DELETE FROM announcement WHERE id=#{id}
+    </delete>
+    <select id="findTopAnnouncements" resultType="com.campus.announcement.model.Announcement">
+        SELECT * FROM announcement WHERE is_top=1 ORDER BY create_time DESC
+    </select>
+</mapper> 

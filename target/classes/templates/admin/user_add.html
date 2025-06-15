@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>新增用户</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>新增用户</h2>
+    <form th:action="@{/admin/user/add}" method="post">
+        用户名：<input type="text" name="username" required><br>
+        密码：<input type="password" name="password" required><br>
+        角色：<select name="role">
+            <option value="student">学生</option>
+            <option value="teacher">教师</option>
+            <option value="admin">管理员</option>
+        </select><br>
+        <button type="submit">提交</button>
+        <a th:href="@{/admin/user/list}">返回</a>
+    </form>
+</div>
+</body>
+</html> 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>权限分配</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div th:if="${session.user == null or (session.user.role != 'admin' and session.user.role != 'teacher')}">
+    <h2>无权限访问</h2>
+    <p>仅管理员和教师可访问权限分配。</p>
+</div>
+<div class="container" th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+<h2>权限分配</h2>
+<p th:if="${msg != null}" th:text="${msg}"></p>
+<p>此处可扩展为用户权限分配功能。当前仅为演示，未实现完整权限管理。</p>
+<h3>用户权限分配</h3>
+<table border="1">
+    <tr>
+        <th>用户ID</th>
+        <th>用户名</th>
+        <th>角色</th>
+        <th>细化权限</th>
+        <th>操作</th>
+    </tr>
+    <tr th:each="u : ${users}">
+        <form th:action="@{/admin/permissions/update}" method="post">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.username}"></td>
+            <td>
+                <select name="role">
+                    <option value="student" th:selected="${u.role == 'student'}">学生</option>
+                    <option value="teacher" th:selected="${u.role == 'teacher'}">教师</option>
+                    <option value="admin" th:selected="${u.role == 'admin'}">管理员</option>
+                </select>
+                <input type="hidden" name="userId" th:value="${u.id}">
+            </td>
+            <td>
+                <label><input type="checkbox" name="permissions" value="announcement" th:checked="${u.permissions != null and u.permissions.contains('announcement')}">公告管理</label>
+                <label><input type="checkbox" name="permissions" value="event" th:checked="${u.permissions != null and u.permissions.contains('event')}">活动管理</label>
+                <label><input type="checkbox" name="permissions" value="comment" th:checked="${u.permissions != null and u.permissions.contains('comment')}">评论管理</label>
+            </td>
+            <td><button type="submit">修改</button></td>
+        </form>
+    </tr>
+</table>
+</div>
+</body>
+</html> 

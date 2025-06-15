@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.announcement.mapper.CommentMapper">
+    <select id="findById" resultType="com.campus.announcement.model.Comment">
+        SELECT * FROM comment WHERE id = #{id}
+    </select>
+    <select id="findByTarget" resultType="com.campus.announcement.model.Comment">
+        SELECT c.*, u.username
+        FROM comment c
+        LEFT JOIN user u ON c.user_id = u.id
+        WHERE c.target_type = #{targetType} AND c.target_id = #{targetId}
+        ORDER BY c.create_time DESC
+    </select>
+    <insert id="insertComment" parameterType="com.campus.announcement.model.Comment">
+        INSERT INTO comment(user_id, target_type, target_id, content, create_time)
+        VALUES(#{userId}, #{targetType}, #{targetId}, #{content}, NOW())
+    </insert>
+    <delete id="deleteComment" parameterType="long">
+        DELETE FROM comment WHERE id=#{id}
+    </delete>
+</mapper> 

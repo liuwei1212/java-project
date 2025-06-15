@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>公告列表</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="banner">
+    <img src="https://img.icons8.com/color/48/000000/school-building.png" class="logo" alt="logo"/>
+    校园公告/活动发布系统
+</div>
+<div class="container">
+<h2>公告列表</h2>
+<a th:href="@{/announcement/add}">发布公告</a>
+<table border="1">
+    <tr>
+        <th>标题</th>
+        <th>作者</th>
+        <th>发布时间</th>
+        <th>操作</th>
+    </tr>
+    <tr th:each="a : ${announcements}">
+        <td><a th:href="@{'/announcement/detail/' + ${a.id}}" th:text="${a.title}"></a></td>
+        <td th:text="${a.authorId}"></td>
+        <td th:text="${#dates.format(a.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td>
+            <span th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+                <a th:href="@{'/announcement/edit/' + ${a.id}}">编辑</a>
+                <a th:href="@{'/announcement/delete/' + ${a.id}}">删除</a>
+                <a th:href="@{'/announcement/top/' + ${a.id}}">置顶</a>
+            </span>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html> 

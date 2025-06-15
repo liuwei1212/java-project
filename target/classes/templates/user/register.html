@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>用户注册</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="banner">
+    <img src="https://img.icons8.com/color/48/000000/school-building.png" class="logo" alt="logo"/>
+    校园公告/活动发布系统
+</div>
+<div class="container">
+<h2>用户注册</h2>
+<form th:action="@{/user/register}" method="post">
+    <div th:if="${error}" th:text="${error}" style="color:red;"></div>
+    用户名：<input type="text" name="username" placeholder="请输入用户名" required><br>
+    密码：<input type="password" name="password" placeholder="请输入密码" required><br>
+    邮箱：<input type="email" name="email" placeholder="请输入邮箱"><br>
+    角色：
+    <select name="role" required>
+        <option value="user">学生</option>
+        <option value="teacher">老师</option>
+        <option value="admin">管理员</option>
+    </select><br>
+    <button type="submit">注册</button>
+    <a th:href="@{/user/login}">返回登录</a>
+</form>
+</div>
+</body>
+</html> 

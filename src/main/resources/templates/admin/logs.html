@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>日志管理</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+    pre {
+        max-width: 100%;
+        max-height: 400px;
+        overflow: auto;
+        background: #f5f5f5;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 14px;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    </style>
+</head>
+<body>
+<div th:if="${session.user == null or (session.user.role != 'admin' and session.user.role != 'teacher')}">
+    <h2>无权限访问</h2>
+    <p>仅管理员和教师可访问日志管理。</p>
+</div>
+<div class="container" th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+<h2>日志管理</h2>
+<p>此处为日志查看与管理功能。</p>
+<form th:action="@{/admin/logs/clear}" method="post" style="margin-bottom:10px;">
+    <button type="submit">清空日志</button>
+</form>
+<h3>系统日志</h3>
+<pre th:text="${logs}">暂无日志内容</pre>
+</div>
+</body>
+</html> 

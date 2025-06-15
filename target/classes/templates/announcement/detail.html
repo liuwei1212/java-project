@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>公告详情</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="banner">
+    <img src="https://img.icons8.com/color/48/000000/school-building.png" class="logo" alt="logo"/>
+    校园公告/活动发布系统
+</div>
+<div class="container" th:if="${announcement != null}">
+    <h2 th:text="${announcement.title}"></h2>
+    <p th:text="${announcement.content}"></p>
+    <p>作者ID：<span th:text="${announcement.authorId}"></span></p>
+    <p>发布时间：<span th:text="${#dates.format(announcement.createTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <a th:href="@{/announcement/list}">返回列表</a>
+    <hr>
+    <h3>评论区</h3>
+    <div th:if="${session.user != null}">
+        <form th:action="@{/comment/add}" method="post">
+            <input type="hidden" name="targetType" value="announcement">
+            <input type="hidden" name="targetId" th:value="${announcement.id}">
+            <textarea name="content" placeholder="请输入评论内容" required></textarea><br>
+            <input type="hidden" name="userId" th:value="${session.user.id}">
+            <button type="submit">发表评论</button>
+        </form>
+    </div>
+    <div th:if="${session.user == null}">
+        <p>请 <a th:href="@{/user/login}">登录</a> 后参与评论。</p>
+    </div>
+    <ul>
+        <li th:each="c : ${comments}">
+            <b th:text="${c.username}"></b>：<span th:text="${c.content}"></span> <span th:text="${#dates.format(c.createTime, 'yyyy-MM-dd HH:mm')}"></span>
+            <button type="button" th:attr="data-id=${c.id}" th:classappend="${c.liked} ? 'liked' : ''" onclick="toggleLike(this)">
+                👍 <span th:text="${c.likeCount}"></span>
+            </button>
+        </li>
+    </ul>
+</div>
+<div th:if="${announcement == null}">
+    <p>公告不存在或已被删除。</p>
+    <a th:href="@{/announcement/list}">返回列表</a>
+</div>
+<script>
+function toggleLike(btn) {
+    var commentId = btn.getAttribute('data-id');
+    var liked = btn.classList.contains('liked');
+    var url = liked ? '/comment/unlike' : '/comment/like';
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'commentId=' + commentId
+    }).then(r => r.json()).then(data => {
+        if (data.success !== false) {
+            btn.classList.toggle('liked');
+            btn.querySelector('span').innerText = data.count;
+        } else {
+            alert(data.msg || '操作失败');
+        }
+    });
+}
+</script>
+<style>
+button.liked { color: #e91e63; font-weight: bold; }
+</style>
+</body>
+</html> 

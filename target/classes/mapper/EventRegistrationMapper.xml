@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.announcement.mapper.EventRegistrationMapper">
+    <select id="findById" resultType="com.campus.announcement.model.EventRegistration">
+        SELECT * FROM event_registration WHERE id = #{id}
+    </select>
+    <select id="findByEventId" resultType="com.campus.announcement.model.EventRegistration">
+        SELECT * FROM event_registration WHERE event_id = #{eventId}
+    </select>
+    <insert id="insertRegistration" parameterType="com.campus.announcement.model.EventRegistration">
+        INSERT INTO event_registration(event_id, user_id, register_time)
+        VALUES(#{eventId}, #{userId}, NOW())
+    </insert>
+    <delete id="deleteRegistration" parameterType="long">
+        DELETE FROM event_registration WHERE id=#{id}
+    </delete>
+    <select id="findAll" resultType="com.campus.announcement.model.EventRegistration">
+        SELECT id, event_id AS eventId, user_id AS userId, register_time AS registerTime
+        FROM event_registration
+        ORDER BY register_time DESC
+    </select>
+    <select id="findByEventIdAndUserId" resultType="com.campus.announcement.model.EventRegistration">
+        SELECT id, event_id AS eventId, user_id AS userId, register_time AS registerTime
+        FROM event_registration
+        WHERE event_id = #{eventId} AND user_id = #{userId}
+        LIMIT 1
+    </select>
+</mapper> 

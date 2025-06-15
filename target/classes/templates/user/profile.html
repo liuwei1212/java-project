@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>个人信息</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+<h2>个人信息</h2>
+<form th:action="@{/user/profile}" method="post">
+    用户名：<input type="text" name="username" th:value="${user.username}" readonly><br>
+    密码：<input type="password" name="password" th:value="${user.password}" required><br>
+    邮箱：<input type="email" name="email" th:value="${user.email}"><br>
+    <button type="submit">保存</button>
+    <div th:if="${msg}" th:text="${msg}" style="color:green;"></div>
+    <div th:if="${error}" th:text="${error}" style="color:red;"></div>
+</form>
+</div>
+</body>
+</html> 

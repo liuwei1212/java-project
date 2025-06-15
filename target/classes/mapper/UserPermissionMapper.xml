@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.campus.announcement.mapper.UserPermissionMapper">
+    <select id="findByUserId" resultType="com.campus.announcement.model.UserPermission">
+        SELECT * FROM user_permission WHERE user_id = #{userId}
+    </select>
+    <insert id="insert" parameterType="com.campus.announcement.model.UserPermission">
+        INSERT INTO user_permission(user_id, permission) VALUES(#{userId}, #{permission})
+    </insert>
+    <delete id="deleteByUserIdAndPermission">
+        DELETE FROM user_permission WHERE user_id=#{userId} AND permission=#{permission}
+    </delete>
+</mapper> 

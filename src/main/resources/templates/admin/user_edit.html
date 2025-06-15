@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>编辑用户</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>编辑用户</h2>
+    <form th:action="@{/admin/user/edit}" method="post">
+        <input type="hidden" name="id" th:value="${user.id}">
+        用户名：<input type="text" name="username" th:value="${user.username}" required><br>
+        角色：<select name="role">
+            <option value="student" th:selected="${user.role == 'student'}">学生</option>
+            <option value="teacher" th:selected="${user.role == 'teacher'}">教师</option>
+            <option value="admin" th:selected="${user.role == 'admin'}">管理员</option>
+        </select><br>
+        权限：
+        <label><input type="checkbox" name="permissions" value="announcement" th:checked="${user.permissions != null and user.permissions.contains('announcement')}">公告管理</label>
+        <label><input type="checkbox" name="permissions" value="event" th:checked="${user.permissions != null and user.permissions.contains('event')}">活动管理</label>
+        <label><input type="checkbox" name="permissions" value="comment" th:checked="${user.permissions != null and user.permissions.contains('comment')}">评论管理</label><br>
+        <button type="submit">保存</button>
+        <a th:href="@{/admin/user/list}">返回</a>
+    </form>
+</div>
+</body>
+</html> 

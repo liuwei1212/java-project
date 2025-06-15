@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>校园公告/活动发布系统</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="banner">
+    <img src="https://img.icons8.com/color/48/000000/school-building.png" class="logo" alt="logo"/>
+    校园公告/活动发布系统
+</div>
+<nav class="navbar">
+    <a th:href="@{/}">首页</a>
+    <a th:href="@{/announcement/list}">公告</a>
+    <a th:href="@{/event/list}">活动</a>
+    <span th:if="${session.user != null and (session.user.role == 'admin' or session.user.role == 'teacher')}">
+        <a th:href="@{/admin/registrations}">报名管理</a>
+    </span>
+    <span th:if="${session.user != null and session.user.role == 'admin'}">
+        <a th:href="@{/admin/system}">系统管理</a>
+    </span>
+    <span th:if="${session.user == null}">
+        <a th:href="@{/user/login}">登录</a>
+        <a th:href="@{/user/register}">注册</a>
+    </span>
+    <span th:if="${session.user != null}">
+        <span th:text="'欢迎，' + ${session.user.username} + '（' + ${session.user.role} + '）'"></span>
+        <a th:href="@{/user/logout}">退出登录</a>
+    </span>
+</nav>
+<div class="container">
+    <h1>欢迎使用校园公告/活动发布系统！</h1>
+    <p>在这里你可以发布和浏览校园公告、活动信息，参与互动。</p>
+</div>
+</body>
+</html> 
